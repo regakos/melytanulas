@@ -11,4 +11,4 @@ related works (papers, GitHub repositories, blog posts, etc),
 and how to run it (building and running the container, running your solution within the container).
 
 
-link: https://arxiv.org/pdf/1910.01108.pdf
+DistilBERT link: https://arxiv.org/pdf/1910.01108.pdf
