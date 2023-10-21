@@ -33,6 +33,8 @@ https://www.kaggle.com/code/arunmohan003/question-answering-using-bert
 
 https://www.techtarget.com/searchenterpriseai/definition/BERT-language-model#:~:text=BERT%2C%20which%20stands%20for%20Bidirectional,calculated%20based%20upon%20their%20connection.
 
+Data source: http://downloads.cs.stanford.edu/nlp/data/coqa/coqa-train-v1.0.json
+
 
 How to run it:
 
