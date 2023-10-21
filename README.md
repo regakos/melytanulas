@@ -17,3 +17,5 @@ Our project is using the DistilBERT transformer model for question answering. Th
 
 
 DistilBERT link: https://arxiv.org/pdf/1910.01108.pdf
+
+https://www.kaggle.com/code/arunmohan003/question-answering-using-bert
