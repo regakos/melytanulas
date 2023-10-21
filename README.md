@@ -19,9 +19,10 @@ BERT link: https://arxiv.org/abs/1810.04805
 
 DistilBERT link: https://arxiv.org/pdf/1910.01108.pdf
 
+Bert explained: https://medium.com/analytics-vidhya/question-answering-system-with-bert-ebe1130f8def
+
 https://www.kaggle.com/code/arunmohan003/question-answering-using-bert
 
 https://www.techtarget.com/searchenterpriseai/definition/BERT-language-model#:~:text=BERT%2C%20which%20stands%20for%20Bidirectional,calculated%20based%20upon%20their%20connection.
 
-https://medium.com/analytics-vidhya/question-answering-system-with-bert-ebe1130f8def
 
