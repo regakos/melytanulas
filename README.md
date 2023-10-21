@@ -8,8 +8,10 @@ Molnár Márk - B44W74;
 Regényi Ákos - OWPAZM;
 Sáfrán Gergely- FT6QWV; 
 
-Functions of the files in the repository: 
+Functions of the files in the repository:
+
 Dockerfile for building the docker image
+
 requirements.txt: for defining the needed packages
 
 Project description:
