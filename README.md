@@ -23,6 +23,7 @@ Our project is using the DistilBERT transformer model for question answering. Th
 
 
 related works (papers, GitHub repositories, blog posts, etc),:
+
 BERT link: https://arxiv.org/abs/1810.04805
 
 DistilBERT link: https://arxiv.org/pdf/1910.01108.pdf
