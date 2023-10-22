@@ -39,4 +39,9 @@ Data source: http://downloads.cs.stanford.edu/nlp/data/coqa/coqa-train-v1.0.json
 
 How to run it:
 
+docker build -t hw .
+
+docker run -p 7860:7860 --name hw_container hw
+
+
 
