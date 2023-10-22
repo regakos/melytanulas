@@ -19,7 +19,7 @@ requirements.txt: for defining the needed packages
 
 
 Project description:
-Our project is using the DistilBERT transformer model for question answering. There are different types of question answering, in our work we give text to the model as input and a related (in-context) question. The model gives the proper answer to de predefined question. We create a user interface to input the data and output the answer. The model is trained on the ... dataset. 
+Our project is about using the DistilBERT transformer model for question answering. There are different types of question answering, in our work we give text to the model as input and a related (in-context) question. The model gives the proper answer to de predefined question. We create a user interface to input the data and output the answer. The model is trained on the ... dataset. 
 
 
 related works (papers, GitHub repositories, blog posts, etc),:
