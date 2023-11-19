@@ -49,5 +49,5 @@ How to run pipeline:
 3. Ask the model about a specific context text, which is burnt in right now, then it gives an answer related to the text in a chat box.
 
 Model training is automatic in the script, in the training section, this trains the baseline model with the squad database. 
-Evaluation is in the predict_evaluate function.
+Evaluation is in the predict_answers_and_evaluate function.
 
