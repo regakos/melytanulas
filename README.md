@@ -43,5 +43,11 @@ docker build -t hw .
 
 docker run -p 7860:7860 --name hw_container hw
 
+How to run pipeline:
+1. Build docker image, then run it.
+2. Access gradio web interface on the 7860 port. (now its on localhost)
+3. Ask the model about a specific context text, which is burnt in right now, then it gives an answer related to the text in a chat box.
 
+Model training is automatic in the script, in the training section, this trains the baseline model with the squad database. 
+Evaluation is in the predict_evaluate function.
 
