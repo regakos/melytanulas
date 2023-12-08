@@ -1,0 +1,25 @@
+version: '1'
+services:
+  inference-container:
+    build:
+      context: ./inference_container
+    ports:
+      - "7860:7860"
+    volumes:
+      - ../model:/workspace/model
+    networks:
+      - mynetwork
+    depends_on:
+      - train-container
+
+  train-container:
+    build:
+      context: ./train_container
+    volumes:
+      - ../data:/workspace/data
+      - ../model:/workspace/model
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:

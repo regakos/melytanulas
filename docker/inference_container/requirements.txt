@@ -1,5 +1,4 @@
 gradio==4.4.1
-pandas==1.5.3
 transformers==4.35.2
 torch==2.1
 numpy==1.23.5

@@ -3,8 +3,13 @@ import pandas as pd
 from transformers import DistilBertTokenizer, DistilBertForQuestionAnswering
 import torch
 
-tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-uncased',return_token_type_ids = True)
-model = DistilBertForQuestionAnswering.from_pretrained('distilbert-base-uncased-distilled-squad')
+load_directory = '/workspace/model/'
+
+# Construct the full paths for model and tokenizer files
+
+# Load DistilBERT model and tokenizer
+model = DistilBertForQuestionAnswering.from_pretrained(load_directory)
+tokenizer = DistilBertTokenizer.from_pretrained(load_directory)
 
 #Dataset
 paragraph = ''' Machine learning (ML) is the scientific study of algorithms and statistical models that computer systems use to progressively improve their performance
