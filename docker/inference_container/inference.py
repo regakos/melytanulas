@@ -2,13 +2,24 @@ import gradio as gr
 import pandas as pd
 from transformers import DistilBertTokenizer, DistilBertForQuestionAnswering
 import torch
+from transformers import DistilBertForQuestionAnswering
+from google.colab import drive
 
 load_directory = '/workspace/model/'
 
 # Construct the full paths for model and tokenizer files
 
 # Load DistilBERT model and tokenizer
-model = DistilBertForQuestionAnswering.from_pretrained(load_directory)
+#model = DistilBertForQuestionAnswering.from_pretrained(load_directory)
+
+drive.mount('/content/drive')
+
+checkpoint =  "distilbert-base-uncased"
+
+model = DistilBertForQuestionAnswering.from_pretrained(checkpoint)
+
+model.load_state_dict(torch.load('/content/drive/MyDrive/OnlabMSc/modellke.pth'))
+
 tokenizer = DistilBertTokenizer.from_pretrained(load_directory)
 
 #Dataset
