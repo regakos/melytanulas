@@ -13,7 +13,7 @@ url = 'https://drive.google.com/u/0/uc?id=1ugKA8FFKcFcv-eWKrP6yO4gaTKeXN38S&expo
 output = '/workspace/model/model.pth'
 gdown.download(url, output, quiet=False)
 
-#checkpoint modell betöltése
+#Alap (baseline) modell betöltése
 checkpoint =  "distilbert-base-uncased"
 model = DistilBertForQuestionAnswering.from_pretrained(checkpoint)
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
