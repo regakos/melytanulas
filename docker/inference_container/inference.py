@@ -4,22 +4,25 @@ from transformers import DistilBertTokenizer, DistilBertForQuestionAnswering
 import torch
 from transformers import DistilBertForQuestionAnswering
 from google.colab import drive
+import gdown
 
 load_directory = '/workspace/model/'
 
-# Construct the full paths for model and tokenizer files
+#Modell letöltése gdown-al Driveból
+url = 'https://drive.google.com/u/0/uc?id=1ugKA8FFKcFcv-eWKrP6yO4gaTKeXN38S&export=download'
+output = '/workspace/model/model.pth'
+gdown.download(url, output, quiet=False)
 
-# Load DistilBERT model and tokenizer
-#model = DistilBertForQuestionAnswering.from_pretrained(load_directory)
-
-drive.mount('/content/drive')
-
+#checkpoint modell betöltése
 checkpoint =  "distilbert-base-uncased"
-
 model = DistilBertForQuestionAnswering.from_pretrained(checkpoint)
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+model = model.to(device)
 
-model.load_state_dict(torch.load('/content/drive/MyDrive/OnlabMSc/modellke.pth'))
+#Trainelt model betöltése
+model.load_state_dict(torch.load('/workspace/model/model.pth'))
 
+#Eredeti Tokenizer betöltése
 tokenizer = DistilBertTokenizer.from_pretrained(load_directory)
 
 #Dataset
