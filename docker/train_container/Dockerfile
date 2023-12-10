@@ -7,4 +7,6 @@ ADD requirements.txt train.py /workspace/
 RUN pip install --upgrade pip
 RUN pip install -r /workspace/requirements.txt
 
+# VOLUME ../../model:/workspace/model
+
 CMD ["python", "/workspace/train.py"]

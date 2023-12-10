@@ -7,6 +7,9 @@ EXPOSE ${GRADIO_SERVER_PORT}
 
 WORKDIR /workspace
 
+# VOLUME ../../model:/workspace/model
+# VOLUME ../../data:/workspace/data
+
 ADD requirements.txt inference.py /workspace/
 
 RUN pip install --upgrade pip

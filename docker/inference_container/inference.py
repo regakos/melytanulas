@@ -1,17 +1,10 @@
+#Importok
 import gradio as gr
 import pandas as pd
 from transformers import DistilBertTokenizer, DistilBertForQuestionAnswering
 import torch
-from transformers import DistilBertForQuestionAnswering
-from google.colab import drive
-import gdown
-
-load_directory = '/workspace/model/'
-
-#Modell letöltése gdown-al Driveból
-url = 'https://drive.google.com/u/0/uc?id=1ugKA8FFKcFcv-eWKrP6yO4gaTKeXN38S&export=download'
-output = '/workspace/model/model.pth'
-gdown.download(url, output, quiet=False)
+from datasets import Dataset, DatasetDict
+import random
 
 #Alap (baseline) modell betöltése
 checkpoint =  "distilbert-base-uncased"
@@ -22,29 +15,73 @@ model = model.to(device)
 #Trainelt model betöltése
 model.load_state_dict(torch.load('/workspace/model/model.pth'))
 
-#Eredeti Tokenizer betöltése
-tokenizer = DistilBertTokenizer.from_pretrained(load_directory)
-
-#Dataset
-paragraph = ''' Machine learning (ML) is the scientific study of algorithms and statistical models that computer systems use to progressively improve their performance
-                on a specific task. Machine learning algorithms build a mathematical model of sample data, known as "training data", in order to make predictions or
-                decisions without being explicitly programmed to perform the task. Machine learning algorithms are used in the applications of email filtering, detection
-                of network intruders, and computer vision, where it is infeasible to develop an algorithm of specific instructions for performing the task. Machine learning
-                is closely related to computational statistics, which focuses on making predictions using computers. The study of mathematical optimization delivers methods,
-                theory and application domains to the field of machine learning. Data mining is a field of study within machine learning, and focuses on exploratory
-                data analysis through unsupervised learning.In its application across business problems, machine learning is also referred to as predictive analytics. '''
+tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-uncased',return_token_type_ids = True)
+#model = DistilBertForQuestionAnswering.from_pretrained('distilbert-base-uncased-distilled-squad')
 
 coqa = pd.read_json('http://downloads.cs.stanford.edu/nlp/data/coqa/coqa-train-v1.0.json')
 
-def ask_model(question,context):
+df= coqa.copy()
 
-  #question = "Who has the highest cases?"
+datasets = {"train": []}
 
-  encoding = tokenizer.encode_plus(question, context)
 
+for idx, row in df.iterrows():
+    context = row['data']['story']
+    questions = [q['input_text'] for q in row['data']['questions']]
+    answers = row['data']['answers']
+    file = row['data']['name']
+
+    for i, (question, answer) in enumerate(zip(questions, answers)):
+        flattened_answer = {
+            'span_start': answer['span_start'],
+            'span_end': answer['span_end'],
+            'span_text': answer['span_text']
+        }
+
+        # Create an example for each question
+        example_data = {
+            "id": f"{idx}_{i}",
+            "title": f"Example {idx}_{i}",
+            "context": context,
+            "question": question,
+            "answers": flattened_answer,  # Single answer for the question
+            "file": file
+        }
+
+        datasets["train"].append(example_data)
+
+# Create a DatasetDict
+coqa_dataset_dict = DatasetDict({"train": datasets["train"]})
+
+dfoutput = pd.read_excel('/workspace/data/output1.xlsx')
+dfoutput.drop(columns=['Unnamed: 0'], inplace = True)
+dfoutput
+
+dftopikok = pd.read_excel('/workspace/data/topikok.xlsx')
+dftopikok.drop(columns=['Unnamed: 0'], inplace = True)
+dftopikok
+
+concatenated_rows = dftopikok.apply(lambda row: ', '.join(row), axis=1)
+print(concatenated_rows.tolist())
+topicsitems = concatenated_rows.tolist()
+
+selected_item = 'mrs, house, chapter, night, place, mr, room, said, says, think'
+index_of_item = topicsitems.index(selected_item)
+
+listofindexes = dfoutput[dfoutput.iloc[:, 0] == index_of_item - 1].index.tolist()
+
+random_index = random.choice(listofindexes)
+
+context_value = datasets["train"][random_index]['context']
+
+updated_context = context_value
+default = context_value
+
+def ask_model(question, context):
+
+  encoding = tokenizer.encode_plus(question, context.value)
 
   input_ids, attention_mask = encoding["input_ids"], encoding["attention_mask"]
-
   start_scores = model(torch.tensor([input_ids]), attention_mask=torch.tensor([attention_mask]))["start_logits"]
   end_scores = model(torch.tensor([input_ids]), attention_mask=torch.tensor([attention_mask]))["end_logits"]
 
@@ -52,37 +89,36 @@ def ask_model(question,context):
   answer_tokens = tokenizer.convert_ids_to_tokens(ans_tokens , skip_special_tokens=True)
 
   answer_tokens_to_string = tokenizer.convert_tokens_to_string(answer_tokens)
-
   return answer_tokens_to_string
 
-# def ask_model(question, paragraph=paragraph):
-#     encoding = tokenizer.encode_plus(text=question,text_pair=paragraph)
-#     inputs = encoding['input_ids']  #Token embeddings
-#     sentence_embedding = encoding['token_type_ids']  #Segment embeddings
-#     tokens = tokenizer.convert_ids_to_tokens(inputs) #input tokens
-#     start_scores, end_scores = model(input_ids=torch.tensor([inputs]), token_type_ids=torch.tensor([sentence_embedding]),return_dict=False )
-#     start_index = torch.argmax(start_scores)
-#     end_index = torch.argmax(end_scores)
-#     answer = ' '.join(tokens[start_index:end_index+1])
-#     corrected_answer = ''
+def update_context(selected_item):
 
-#     for word in answer.split():
-
-#     #If it's a subword token
-#       if word[0:2] == '##':
-#           corrected_answer += word[2:]
-#       else:
-#           corrected_answer += ' ' + word
-#     return corrected_answer
-
+    index_of_item = topicsitems.index(selected_item)
+    listofindexes = dfoutput[dfoutput.iloc[:, 0] == index_of_item - 1].index.tolist()
+    random_index = random.choice(listofindexes)
+    context_value = datasets["train"][random_index]['context']
+    updated_context = context_value
+    context.value = context_value
+    return updated_context
 
 
 def response(message, history=None):
-    return ask_model(message, paragraph)
+    return ask_model(message, context)
 
-iface = gr.ChatInterface(fn=response,
-    title="Question answering with Distillbert",
-    description="This bot gives an answer for your questions, it doesn't have memory",
-    )
+with gr.Blocks() as demo:
+    with gr.Row():
+        # Column for inputs
+        with gr.Column():
+            chat= gr.ChatInterface(fn=response,)
 
-iface.launch(server_name="0.0.0.0")
+
+
+        # Column for outputs
+        with gr.Column():
+            hide = gr.Dropdown(choices=topicsitems, interactive=True, value="mrs, house, chapter, night, place, mr, room, said, says, think")
+
+            context = gr.Textbox(label="Context", value= default, interactive=False, visible=True)
+            hide.change(fn = update_context, inputs=hide, outputs=context)
+
+# Launch the interface
+demo.launch(server_name="0.0.0.0")

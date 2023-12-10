@@ -2,3 +2,5 @@ gradio==4.4.1
 transformers==4.35.2
 torch==2.1
 numpy==1.23.5
+datasets==2.15.0 #gradio kiiratás
+openpyxl==3.1.2 #Kell a pandashoz
