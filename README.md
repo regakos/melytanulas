@@ -49,7 +49,7 @@ from the docker/inference_container folder to build the docker image and run it.
 
 How to run pipeline:
 1. If you don't wan't to run the train container you have to download our trained model from this link: https://drive.google.com/file/d/1ugKA8FFKcFcv-eWKrP6yO4gaTKeXN38S/view?usp=drive_link. Paste it into "model" directory, next to "pasteOurModelhere.txt". (recommended)
-2. Build docker image and run it. (with the 'docker-compose up' command). You have to execute this command in the /docker directory. If you want to use our trained model, you have to execute "docker-compose up", if you want to use the train container too, then you will need "docker-compose -f docker-compose.withTrain.yml up -d".
+2. Build docker image and run it. (with the 'docker-compose up' command). You have to execute this command in the /docker directory. If you want to use the train container too, then you will need "docker-compose -f docker-compose.withTrain.yml up -d".
 3. Access gradio web interface on the 7860 port. (now its on localhost http://localhost:7860/) 
 4. From the dropdown list select a 'topic' (list of words), for the context you are interested in.
 5. Ask the model about the specific context, in the chatbox, then it gives an answer related to the text in the same chat box.
