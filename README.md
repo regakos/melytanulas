@@ -48,10 +48,11 @@ from the docker/inference_container folder to build the docker image and run it.
 
 
 How to run pipeline:
-1. Build docker image and run it. (with the 'docker-compose up' command)
-2. Access gradio web interface on the 7860 port. (now its on localhost http://localhost:7860/) 
-3. From the dropdown list select a 'topic' (list of words), for the context you are interested in.
-4. Ask the model about the specific context, in the chatbox, then it gives an answer related to the text in the same chat box.
+1. If you don't wan't to run the train container you ha ve to download our trained model from here: https://drive.google.com/file/d/1ugKA8FFKcFcv-eWKrP6yO4gaTKeXN38S/view?usp=drive_link. Paste it into your model directory, next to "pasteOurModelhere.txt".
+2. Build docker image and run it. (with the 'docker-compose up' command). You need to execute the docker-compose in the "docker" dir if you want to run both the train and the inference container. If you want to use the inference container with our trained model, you have to execute the command in the "docker/inference_container" dir
+3. Access gradio web interface on the 7860 port. (now its on localhost http://localhost:7860/) 
+4. From the dropdown list select a 'topic' (list of words), for the context you are interested in.
+5. Ask the model about the specific context, in the chatbox, then it gives an answer related to the text in the same chat box.
 
 Model training is in the train.py file in the docker/train_container folder. This trains the baseline model with the squad database. 
 Evaluation is in the predict_answers_and_evaluate function.
