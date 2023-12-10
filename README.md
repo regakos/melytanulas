@@ -12,7 +12,7 @@ Sáfrán Gergely- FT6QWV;
 
 
 Project description:
-Our project is about using the DistilBERT transformer model for question answering. There are different types of question answering, in our work we give text to the model as input and a related (in-context) question. The model gives the proper answer to the predefined question. We create a user interface to input the data and output the answer. The model is trained on the ... dataset. \n
+Our project is about using the DistilBERT transformer model for question answering. There are different types of question answering, in our work we give text to the model as input and a related (in-context) question. The model gives the proper answer to the predefined question. We create a user interface to input the data and output the answer. The model is trained on the ... dataset.
 
 
 
