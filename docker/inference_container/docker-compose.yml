@@ -10,17 +10,6 @@ services:
       - ../data:/workspace/data
     networks:
       - mynetwork
-    depends_on:
-      - train-container
-
-  train-container:
-    build:
-      context: ./train_container
-    volumes:
-      - ../data:/workspace/data
-      - ../model:/workspace/model
-    networks:
-      - mynetwork
 
 networks:
   mynetwork:
